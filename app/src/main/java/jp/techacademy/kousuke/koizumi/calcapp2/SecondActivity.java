@@ -17,25 +17,14 @@ public class SecondActivity extends AppCompatActivity {
         setContentView(R.layout.activity_second);
 
         Intent intent = getIntent();
-        double value1 = intent.getDoubleExtra("VALUE1", 0);
-        double value2 = intent.getDoubleExtra("VALUE2", 0);
-        int value3 = intent.getIntExtra("VALUE3", 0);
-        // ↑↑取得したボタンのIDをvalue3に代入しています。
+        double result2 = intent.getDoubleExtra("VALUE1", 0);
+        boolean flag2 = intent.getBooleanExtra("VALUE2", true);
 
         TextView textView = (TextView) findViewById(R.id.textView);
-        if (value3 == 2131427426) {
-            textView.setText(String.valueOf(value1 + value2));
-        } else if (value3 == 2131427427) {
-            textView.setText(String.valueOf(value1 - value2));
-        } else if (value3 == 2131427428) {
-            textView.setText(String.valueOf(value1 * value2));
-        } else if (value3 == 2131427429 && value2 != 0) {
-            textView.setText(String.valueOf(value1 / value2));
-        } else {
+        if (flag2 == false) {
             textView.setText("０で割ることは出来ません！");
-            // ↑↑「0では割る」計算をしてしまった場合についての処理です
-            // ↑↑ 数字でない文字を入力した場合の処理については力不足で未対応です
-
+        } else {
+            textView.setText(String.valueOf(result2));
         }
     }
 

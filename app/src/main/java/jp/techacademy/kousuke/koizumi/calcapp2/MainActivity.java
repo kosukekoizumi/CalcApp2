@@ -26,21 +26,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         Button button4 = (Button) findViewById(R.id.button4);
         button4.setOnClickListener(this);
-        // ↑↑ 似たような構文が4つ並びますがよりスマートな処理の仕方はありますでしょうか？
     }
 
     @Override
     public void onClick(View v) {
         double firstNumber = Double.parseDouble(((EditText) findViewById(R.id.editText1)).getText().toString());
         double secondNumber = Double.parseDouble(((EditText) findViewById(R.id.editText2)).getText().toString());
-        Intent intent = new Intent(this, SecondActivity.class);
-        intent.putExtra("VALUE1", firstNumber);
-        intent.putExtra("VALUE2", secondNumber);
+        int buttonId = v.getId();    //★四則演算のどのキーが押されたかの判断（キーのID取得）
+        double result1 = 0;    //★計算結果
+        boolean flag1 = true;    //★０で割ろうとしていないかのチェック
 
-        int buttonId = v.getId();
-        intent.putExtra("VALUE3", buttonId);//★
-        // ↑↑ 「＋－×÷」のどのボタンを押したをどう判定すれば良いのか悩みました。
-        // ↑↑ とりあえずボタンのIDを取得するという方法で切り抜けましたが…。
+        if (buttonId == R.id.button1) {
+            result1 = (firstNumber + secondNumber);
+        } else if (buttonId == R.id.button2) {
+            result1 = firstNumber - secondNumber;
+        } else if (buttonId == R.id.button3) {
+            result1 = firstNumber * secondNumber;
+        } else if (buttonId == R.id.button4 && secondNumber != 0) {
+            result1 = firstNumber / secondNumber;
+        } else {
+            flag1 = false;
+        }
+
+        Intent intent = new Intent(this, SecondActivity.class);
+        intent.putExtra("VALUE1",result1);
+        intent.putExtra("VALUE2",flag1);
 
         startActivity(intent);
     }
