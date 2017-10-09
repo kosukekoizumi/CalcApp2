@@ -18,10 +18,13 @@ public class SecondActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         double result2 = intent.getDoubleExtra("VALUE1", 0);
-        boolean flag2 = intent.getBooleanExtra("VALUE2", true);
+        boolean flagNull2 = intent.getBooleanExtra("VALUE2", true);
+        boolean flagZero2 = intent.getBooleanExtra("VALUE3", true);
 
         TextView textView = (TextView) findViewById(R.id.textView);
-        if (flag2 == false) {
+        if (flagNull2 == false) {
+            textView.setText("数字を入力してください！");
+        } else if (flagZero2 == false) {
             textView.setText("０で割ることは出来ません！");
         } else {
             textView.setText(String.valueOf(result2));

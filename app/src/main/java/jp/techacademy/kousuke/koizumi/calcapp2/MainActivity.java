@@ -30,11 +30,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        double firstNumber = Double.parseDouble(((EditText) findViewById(R.id.editText1)).getText().toString());
-        double secondNumber = Double.parseDouble(((EditText) findViewById(R.id.editText2)).getText().toString());
-        int buttonId = v.getId();    //★四則演算のどのキーが押されたかの判断（キーのID取得）
-        double result1 = 0;    //★計算結果
-        boolean flag1 = true;    //★０で割ろうとしていないかのチェック
+        int buttonId = v.getId();    //☆四則演算のどのキーが押されたかの判断（キーのID取得）
+        boolean flagNull1 = true;    //★入力がされているかのチェック用フラグ
+        boolean flagZero1 = true;    //☆０で割ろうとしているかのチェック用フラグ
+        double firstNumber = 0;
+        double secondNumber = 0;
+        double result1 = 0;    //☆計算結果
+
+        if (((EditText) findViewById(R.id.editText1)).getText().toString().length() == 0
+                || ((EditText) findViewById(R.id.editText2)).getText().toString().length() == 0 ) {
+            flagNull1 = false;  //★↑↑firstとsecondを同時に処理しようとしたら条件文が2行に…（別々にした方がいいですか？）
+        } else {
+            firstNumber = Double.parseDouble(((EditText) findViewById(R.id.editText1)).getText().toString());
+            secondNumber = Double.parseDouble(((EditText) findViewById(R.id.editText2)).getText().toString());
+        }
 
         if (buttonId == R.id.button1) {
             result1 = (firstNumber + secondNumber);
@@ -45,12 +54,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } else if (buttonId == R.id.button4 && secondNumber != 0) {
             result1 = firstNumber / secondNumber;
         } else {
-            flag1 = false;
+            flagZero1 = false;
         }
 
         Intent intent = new Intent(this, SecondActivity.class);
         intent.putExtra("VALUE1",result1);
-        intent.putExtra("VALUE2",flag1);
+        intent.putExtra("VALUE2",flagNull1);
+        intent.putExtra("VALUE3",flagZero1);
 
         startActivity(intent);
     }
