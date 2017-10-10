@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -32,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         int buttonId = v.getId();    //☆四則演算のどのキーが押されたかの判断（キーのID取得）
         boolean flagNull1 = true;    //★入力がされているかのチェック用フラグ
+        boolean flagIllegal1 = true;    //★入力内容が正しいかのチェック用フラグ
         boolean flagZero1 = true;    //☆０で割ろうとしているかのチェック用フラグ
         double firstNumber = 0;
         double secondNumber = 0;
@@ -39,10 +41,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if (((EditText) findViewById(R.id.editText1)).getText().toString().length() == 0
                 || ((EditText) findViewById(R.id.editText2)).getText().toString().length() == 0 ) {
-            flagNull1 = false;  //★↑↑firstとsecondを同時に処理しようとしたら条件文が2行に…（別々にした方がいいですか？）
+            flagNull1 = false;
         } else {
+            try {
             firstNumber = Double.parseDouble(((EditText) findViewById(R.id.editText1)).getText().toString());
             secondNumber = Double.parseDouble(((EditText) findViewById(R.id.editText2)).getText().toString());
+            } catch(Exception e)  {
+                flagIllegal1 = false;
+            }
         }
 
         if (buttonId == R.id.button1) {
@@ -60,7 +66,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Intent intent = new Intent(this, SecondActivity.class);
         intent.putExtra("VALUE1",result1);
         intent.putExtra("VALUE2",flagNull1);
-        intent.putExtra("VALUE3",flagZero1);
+        intent.putExtra("VALUE3",flagIllegal1);
+        intent.putExtra("VALUE4",flagZero1);
 
         startActivity(intent);
     }

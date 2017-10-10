@@ -19,11 +19,14 @@ public class SecondActivity extends AppCompatActivity {
         Intent intent = getIntent();
         double result2 = intent.getDoubleExtra("VALUE1", 0);
         boolean flagNull2 = intent.getBooleanExtra("VALUE2", true);
-        boolean flagZero2 = intent.getBooleanExtra("VALUE3", true);
+        boolean flagIllegal2 = intent.getBooleanExtra("VALUE3", true);
+        boolean flagZero2 = intent.getBooleanExtra("VALUE4", true);
 
         TextView textView = (TextView) findViewById(R.id.textView);
         if (flagNull2 == false) {
             textView.setText("数字を入力してください！");
+        } else if (flagIllegal2 == false) {
+            textView.setText("入力内容が誤っています！");
         } else if (flagZero2 == false) {
             textView.setText("０で割ることは出来ません！");
         } else {
